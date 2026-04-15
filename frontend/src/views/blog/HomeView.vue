@@ -33,8 +33,8 @@ const contentScrollStyle = computed(() => ({
 const isSearchMode = computed(() => Boolean(activeKeyword.value));
 
 const heroStats = computed(() => [
-  { label: '当前列表', value: isSearchMode.value ? '搜索结果' : '全部文章' },
-  { label: '文章数量', value: pagination.value.total || 0 }
+  { label: '文章总数', value: pagination.value.total || 0 },
+  { label: '当前页码', value: pagination.value.page || 1 }
 ]);
 
 function normalizePage(pageValue) {
@@ -170,7 +170,10 @@ watch(
           <div class="mode-dot"></div>
           <div class="min-w-0">
             <p class="mode-title">{{ isSearchMode ? '搜索模式' : '全部文章' }}</p>
-            <p class="mode-subtitle" :title="isSearchMode ? `关键词：${activeKeyword}` : '按发布时间倒序展示最新发布内容'">
+            <p
+              class="mode-subtitle"
+              :title="isSearchMode ? `关键词：${activeKeyword}` : '按发布时间倒序展示最新发布内容'"
+            >
               {{ isSearchMode ? `关键词：${activeKeyword}` : '按发布时间倒序展示最新发布内容' }}
             </p>
           </div>
@@ -195,12 +198,6 @@ watch(
           <el-button type="primary" class="!px-6" @click="handleSearch">搜索</el-button>
           <el-button v-if="isSearchMode" plain @click="handleClearSearch">清空筛选</el-button>
         </div>
-
-        <transition name="fade-slide">
-          <p v-if="isSearchMode" class="mt-3 text-sm text-slate-500">
-            关键词 “{{ activeKeyword }}” 共找到 {{ pagination.total }} 篇文章
-          </p>
-        </transition>
       </template>
     </PageHero>
 
@@ -319,17 +316,6 @@ watch(
   font-weight: 700;
   letter-spacing: 0.04em;
   padding: 4px 10px;
-}
-
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: all 0.22s ease;
-}
-
-.fade-slide-enter-from,
-.fade-slide-leave-to {
-  opacity: 0;
-  transform: translateY(4px);
 }
 
 .card-list-enter-active,

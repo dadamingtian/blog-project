@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage, ElMessageBox } from 'element-plus';
@@ -20,16 +20,10 @@ const menuItems = [
   { path: '/admin/settings', label: '站点设置' }
 ];
 
-function handleSelect(path) {
-  if (path !== route.path) {
-    router.push(path);
-  }
-}
-
 async function handleLogout() {
   try {
-    await ElMessageBox.confirm('确认退出当前管理员账号吗？', '退出确认', {
-      confirmButtonText: '退出登录',
+    await ElMessageBox.confirm('确认退出当前登录账号吗？', '退出登录', {
+      confirmButtonText: '确认退出',
       cancelButtonText: '取消',
       type: 'warning'
     });
@@ -51,7 +45,11 @@ async function handleLogout() {
           <RouterLink to="/admin/dashboard" class="text-lg font-semibold text-slate-900">博客后台管理</RouterLink>
         </div>
 
-        <el-menu :default-active="activePath" class="h-[calc(100%-64px)] border-r-0 overflow-y-auto" @select="handleSelect">
+        <el-menu
+          :default-active="activePath"
+          router
+          class="h-[calc(100%-64px)] overflow-y-auto border-r-0"
+        >
           <el-menu-item v-for="item in menuItems" :key="item.path" :index="item.path">
             {{ item.label }}
           </el-menu-item>
@@ -61,9 +59,9 @@ async function handleLogout() {
       <el-container class="h-full">
         <el-header class="h-16 border-b border-slate-200 bg-white px-6">
           <div class="flex h-full items-center justify-between">
-            <div class="text-sm text-slate-600">欢迎你，{{ adminName }}</div>
+            <div class="text-sm text-slate-600">你好，{{ adminName }}</div>
             <div class="flex items-center gap-3">
-              <RouterLink to="/" target="_blank" class="text-sm text-brand hover:underline">查看前台博客</RouterLink>
+              <RouterLink to="/" target="_blank" class="text-sm text-brand hover:underline">查看前台</RouterLink>
               <el-button type="danger" plain @click="handleLogout">退出登录</el-button>
             </div>
           </div>

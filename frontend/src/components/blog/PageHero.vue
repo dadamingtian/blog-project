@@ -77,6 +77,7 @@ const normalizedStats = computed(() =>
   overflow: hidden;
   isolation: isolate;
   animation: heroFadeIn 0.4s ease;
+  pointer-events: none;
 }
 
 .hero-orb {
@@ -106,6 +107,7 @@ const normalizedStats = computed(() =>
 
 .hero-main {
   animation: riseIn 0.34s ease;
+  pointer-events: auto;
 }
 
 .hero-actions {
@@ -114,12 +116,14 @@ const normalizedStats = computed(() =>
   justify-content: flex-end;
   align-items: flex-start;
   flex: 1;
+  pointer-events: auto;
 }
 
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+  pointer-events: auto;
 }
 
 .hero-stat-item {
@@ -128,6 +132,17 @@ const normalizedStats = computed(() =>
   border-radius: 12px;
   padding: 10px 12px;
   animation: riseIn 0.32s ease both;
+  pointer-events: auto;
+}
+
+.page-hero :deep(input),
+.page-hero :deep(button),
+.page-hero :deep(a),
+.page-hero :deep(textarea),
+.page-hero :deep(.el-input),
+.page-hero :deep(.el-button),
+.page-hero :deep(.el-input__wrapper) {
+  pointer-events: auto;
 }
 
 .hero-stat-value {

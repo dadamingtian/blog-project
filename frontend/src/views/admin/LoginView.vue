@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
@@ -43,7 +43,7 @@ async function handleLogin() {
     ElMessage.success('登录成功');
     router.replace(route.query.redirect || '/admin/dashboard');
   } catch (err) {
-    ElMessage.error(err.message || '登录失败');
+    ElMessage.error(err.message || '登录失败，请检查账号或密码');
   } finally {
     loading.value = false;
   }

@@ -1,4 +1,4 @@
-<script setup>
+﻿<script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import * as echarts from 'echarts';
@@ -91,7 +91,7 @@ function initCharts() {
     trendChartInstance.setOption({
       color: ['#3b82f6', '#f97316', '#10b981'],
       tooltip: { trigger: 'axis' },
-      legend: { data: ['总创建数', '已发布', '草稿'] },
+      legend: { data: ['文章总数', '已发布', '草稿'] },
       grid: { left: '3%', right: '3%', bottom: '3%', containLabel: true },
       xAxis: {
         type: 'category',
@@ -99,7 +99,7 @@ function initCharts() {
       },
       yAxis: { type: 'value', minInterval: 1 },
       series: [
-        { name: '总创建数', type: 'line', smooth: true, data: trendData.value.map((item) => item.total) },
+        { name: '文章总数', type: 'line', smooth: true, data: trendData.value.map((item) => item.total) },
         { name: '已发布', type: 'line', smooth: true, data: trendData.value.map((item) => item.published) },
         { name: '草稿', type: 'line', smooth: true, data: trendData.value.map((item) => item.draft) }
       ]
@@ -253,10 +253,10 @@ onBeforeUnmount(() => {
 
 <template>
   <section>
-    <AdminPageHeader title="仪表盘" description="集中查看文章、评论与站点内容的关键数据。">
+    <AdminPageHeader title="仪表盘" description="快速查看内容规模、近七天趋势、评论状态与文章热度。">
       <template #actions>
         <div class="flex gap-2">
-          <el-button type="primary" @click="router.push('/admin/articles/create')">写新文章</el-button>
+          <el-button type="primary" @click="router.push('/admin/articles/create')">新建文章</el-button>
           <el-button @click="router.push('/admin/comments')">评论审核</el-button>
         </div>
       </template>
@@ -286,18 +286,18 @@ onBeforeUnmount(() => {
 
       <div class="mt-6 grid gap-4 xl:grid-cols-2">
         <el-card shadow="hover">
-          <template #header>文章热度统计（Top10）</template>
+          <template #header>文章热度统计（Top 10）</template>
 
-          <el-empty v-if="!hasHotArticles" description="暂无已发布文章，暂无热度数据" />
+          <el-empty v-if="!hasHotArticles" description="暂无已发布文章，暂不展示热度统计" />
           <div v-else ref="hotChartRef" class="h-[420px] w-full"></div>
         </el-card>
 
         <el-card shadow="hover">
           <template #header>
             <div class="flex items-center justify-between">
-              <span>阅读量趋势（悬浮热度坐标轴联动）</span>
+              <span>阅读量趋势</span>
               <span class="text-xs text-slate-400">
-                {{ hasHotArticles ? (activeHotArticle ? activeHotArticle.title : '全部文章（近 7 天总阅读量）') : '暂无阅读趋势数据' }}
+                {{ hasHotArticles ? (activeHotArticle ? activeHotArticle.title : '展示全部文章近 7 天总阅读量') : '暂无热度数据' }}
               </span>
             </div>
           </template>
